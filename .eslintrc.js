@@ -18,7 +18,9 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "@typescript-eslint"],
-  rules: {},
+  rules: {
+    "@typescript-eslint/no-var-requires": "off",
+  },
   settings: {
     react: {
       version: "detect",

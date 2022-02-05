@@ -1,7 +1,13 @@
+const chalk = require("chalk");
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
+
 module.exports = {
   entry: "./src/index.tsx",
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
+  },
+  cache: {
+    type: "filesystem",
   },
   module: {
     rules: [
@@ -54,4 +60,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new ProgressBarPlugin({
+      format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
+    }),
+  ],
 };
