@@ -1,0 +1,25 @@
+{
+  "name": "my first extension",
+  "version": "1.0.0",
+  "description": "This is my first extension",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "browser_action": {
+    "default_title": "Created by Flower-F. Enjoy it!"
+  }
+}

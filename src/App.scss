@@ -1,0 +1,49 @@
+#bullet-chat-everywhere {
+  .control {
+    position: fixed;
+    font-size: 14px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    box-shadow: 5px 5px 20px #a3a2a3, -5px -5px 20px #fff,
+      0px 0px 0px 20px #ddd inset, -10px -10px 20px #fff inset,
+      10px 10px 20px #a3a2a3 inset;
+    z-index: 2147483647;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &.selected {
+      background-color: #ccc;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .scope {
+    position: fixed;
+    right: -450px;
+    bottom: -450px;
+    border-radius: 50%;
+    border: 2px dashed #999;
+    width: 900px;
+    height: 900px;
+    z-index: 2147483647;
+    visibility: hidden;
+  }
+}
+
+#bullet-chat-everywhere-canvas {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2147483646;
+  top: 0;
+  left: 0;
+}
