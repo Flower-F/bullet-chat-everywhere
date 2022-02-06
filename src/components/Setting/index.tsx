@@ -22,7 +22,7 @@ const Setting: React.FC<ISetting> = ({ setOpenState, openState }) => {
   return (
     <div className="setting">
       {openState === OpenState.OPEN_SETTING ? (
-        <div className="setting-board"></div>
+        <div className="setting-board">透明度</div>
       ) : null}
       <IoSettingsOutline className="setting-icon" onClick={handleClick} />
     </div>

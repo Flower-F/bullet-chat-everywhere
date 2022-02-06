@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { AiOutlineFontSize } from "react-icons/ai";
 import { OpenState } from "../enums";
 import { colors } from "./colors";
@@ -46,25 +46,29 @@ const Font: React.FC<IFont> = ({
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     const color = e.target.value;
     if (color.length < 1) {
-      e.target.value = "#";
-    }
-    if (color.length > 6) {
-      e.target.value = e.target.value.substring(0, 7);
+      setInputColor("#");
+    } else if (color.length > 6) {
+      setInputColor(e.target.value.substring(0, 7));
+    } else {
+      setInputColor(color);
     }
 
     // 校验颜色是否合法
     const reg = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     if (!reg.test(color)) {
       setColor("#000000");
-      return;
     }
-    setColor(color);
   };
 
-  const handlePickColor = (e: MouseEvent) => {
-    const div = e.target as HTMLDivElement;
-    setColor(div.style.backgroundColor);
+  const handlePickColor = (index: number) => {
+    if (index < 0 || index >= 14) {
+      return;
+    }
+    setColor(colors[index]);
+    setInputColor(colors[index]);
   };
+
+  const [inputColor, setInputColor] = useState(color);
 
   return (
     <div className="font">
@@ -76,8 +80,8 @@ const Font: React.FC<IFont> = ({
             <input
               type="text"
               className="color-text"
-              defaultValue={"#000000"}
               onChange={handleChangeColor}
+              value={inputColor}
             />
             <div className="color-show">
               颜色演示
@@ -87,12 +91,12 @@ const Font: React.FC<IFont> = ({
               ></span>
             </div>
             <div className="color-picker">
-              {colors.map((item) => (
+              {colors.map((item, index) => (
                 <div
-                  key={item}
                   className="color-kind"
+                  key={item}
                   style={{ backgroundColor: item }}
-                  onClick={handlePickColor}
+                  onClick={() => handlePickColor(index)}
                 ></div>
               ))}
             </div>
