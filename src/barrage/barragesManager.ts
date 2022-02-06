@@ -58,6 +58,8 @@ export class BarragesManager {
     // 设置画布宽高
     this.canvas.width = window.innerWidth;
     this.canvas.height = BARRAGE_HEIGHT * CHANNEL_SIZE;
+    // 画布透明度
+    this.canvas.style.opacity = this.opacity.toString();
   }
 
   initBarrage(data: IBarrage[], positions: number[]) {
@@ -67,7 +69,7 @@ export class BarragesManager {
     // 初始化数据，每个通道先插入一条弹幕
     // 2,3,4,5,6 [1,2]
     // 分配成 [2] [3]
-    for (let i = 0; i < positions.length; i++) {
+    for (let i = 0; i < positions.length && i < data.length; i++) {
       // 查找当前插入的通道
       const channel = positions[i];
       // 获取弹幕
@@ -90,8 +92,8 @@ export class BarragesManager {
 
   // 将数据包装成弹幕对象
   getBarrage(obj: IBarrage, channel = 1) {
-    const { dateTime, content, fontSize, color } = obj;
-    const barrage = new Barrage(dateTime, content, fontSize, color, channel);
+    const { content, fontSize, color } = obj;
+    const barrage = new Barrage(content, fontSize, color, channel);
     // 初始化宽高
     barrage.initWH();
     return barrage;
@@ -121,8 +123,7 @@ export class BarragesManager {
           channel[i].x -= this.speed;
 
           // 渲染弹幕
-          this.context.font =
-            channel[i].fontSize + "px/" + BARRAGE_HEIGHT + "px " + FONT_FAMILY;
+          this.context.font = `bolder ${channel[i].fontSize}px/${BARRAGE_HEIGHT}px ${FONT_FAMILY}`;
 
           if (this.colorSetting === ColorSetting.WHITE_COLOR_SETTING) {
             this.context.fillStyle = "#ffffff";
@@ -223,6 +224,7 @@ export class BarragesManager {
   // 设置透明度
   setOpacity(opacity: number) {
     this.opacity = opacity;
+    this.canvas.style.opacity = opacity.toString();
   }
 
   // 设置弹幕速度

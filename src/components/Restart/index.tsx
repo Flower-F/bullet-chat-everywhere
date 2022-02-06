@@ -13,8 +13,8 @@ const Restart: React.FC<IRestart> = ({ barragesManager }) => {
   };
 
   return (
-    <div className="restart" onClick={handleClick}>
-      <VscDebugRestart className="restart-icon" />
+    <div className="restart">
+      <VscDebugRestart className="restart-icon" onClick={handleClick} />
     </div>
   );
 };

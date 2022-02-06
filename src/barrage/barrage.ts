@@ -3,7 +3,6 @@
 import { BARRAGE_HEIGHT, MARGIN_FROM_WINDOW } from "./constants";
 
 export class Barrage {
-  dateTime: number;
   content: string;
   fontSize: number;
   isInitedWH: boolean;
@@ -17,13 +16,11 @@ export class Barrage {
   y: number;
 
   constructor(
-    dateTime: number,
     content: string,
     fontSize: number,
     color: string,
     channel: number
   ) {
-    this.dateTime = dateTime; // 日期，一个时间戳
     this.content = content; // 弹幕的内容
     this.fontSize = fontSize; // 弹幕字体大小
     this.color = color; // 弹幕颜色

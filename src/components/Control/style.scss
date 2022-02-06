@@ -108,6 +108,7 @@
     ul {
       .menu-item {
         position: absolute;
+        z-index: 20000000;
         display: block;
         top: 0;
         bottom: 0;

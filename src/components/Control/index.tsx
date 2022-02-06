@@ -5,11 +5,12 @@ import Question from "../Question";
 import Setting from "../Setting";
 import Switcher from "../Switcher";
 import "./style.scss";
-import url from "../../../url.config";
 import { BarragesManager } from "../../barrage/barragesManager";
 import { ChannelPositions } from "../../barrage/channelPositions";
 import Restart from "../Restart";
 import { PositionSetting } from "../../barrage/enums";
+import { OpenState } from "../enums";
+import { axiosInstance } from "../../request";
 
 const Control = () => {
   const [barragesManager, setBarragesManager] = useState<BarragesManager>(
@@ -20,17 +21,31 @@ const Control = () => {
   );
 
   useEffect(() => {
-    fetch(url + "/barrages").then((res) => {
-      res.json().then((data) => {
-        setBarragesManager(
-          new BarragesManager(
-            data.list,
-            new ChannelPositions(PositionSetting.WHOLE_POSITION)
-          )
-        );
+    axiosInstance
+      .post("/getBarrages", {
+        website: window.location.href.split("?")[0],
+      })
+      .then(({ data }) => {
+        if (data.status === 200) {
+          console.log("弹幕数据", data.list);
+          setBarragesManager(
+            new BarragesManager(
+              data.list,
+              new ChannelPositions(PositionSetting.WHOLE_POSITION)
+            )
+          );
+        } else {
+          console.log("Error: ", data.msg);
+        }
       });
-    });
   }, []);
+
+  // 字体配置
+  const [fontSize, setFontSize] = useState(30);
+  const [color, setColor] = useState("#000000");
+
+  // 控制开关状态
+  const [openState, setOpenState] = useState(OpenState.CLOSE);
 
   return (
     <div className="bullet-control">
@@ -46,10 +61,16 @@ const Control = () => {
             <Switcher barragesManager={barragesManager} />
           </li>
           <li className="menu-item">
-            <Chat />
+            <Chat
+              openState={openState}
+              setOpenState={setOpenState}
+              barragesManager={barragesManager}
+              fontSize={fontSize}
+              color={color}
+            />
           </li>
           <li className="menu-item">
-            <Setting />
+            <Setting openState={openState} setOpenState={setOpenState} />
           </li>
           <li className="menu-item">
             <Question />
@@ -58,7 +79,14 @@ const Control = () => {
             <Restart barragesManager={barragesManager} />
           </li>
           <li className="menu-item">
-            <Font />
+            <Font
+              openState={openState}
+              setOpenState={setOpenState}
+              fontSize={fontSize}
+              color={color}
+              setFontSize={setFontSize}
+              setColor={setColor}
+            />
           </li>
         </ul>
       </div>

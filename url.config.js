@@ -1,7 +1,7 @@
 const isDev = process.env.NODE_ENV !== "production";
 
 // 本地 url
-let url = "http://localhost:3001";
+let url = "https://qctknu.api.cloudendpoint.cn";
 
 if (!isDev) {
   // 线上 url

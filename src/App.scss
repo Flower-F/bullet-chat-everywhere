@@ -9,7 +9,7 @@
     box-shadow: 5px 5px 20px #a3a2a3, -5px -5px 20px #fff,
       0px 0px 0px 20px #ddd inset, -10px -10px 20px #fff inset,
       10px 10px 20px #a3a2a3 inset;
-    z-index: 2147483647;
+    z-index: 2000000001;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@
     border: 2px dashed #999;
     width: 900px;
     height: 900px;
-    z-index: 2147483647;
+    z-index: 2000000001;
     visibility: hidden;
   }
 }
@@ -43,7 +43,7 @@
 #bullet-chat-everywhere-canvas {
   position: fixed;
   pointer-events: none;
-  z-index: 2147483646;
+  z-index: 2000000000;
   top: 0;
   left: 0;
 }

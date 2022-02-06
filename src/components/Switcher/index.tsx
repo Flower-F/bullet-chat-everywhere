@@ -20,11 +20,11 @@ const Switcher: React.FC<ISwitcher> = ({ barragesManager }) => {
   };
 
   return (
-    <div className="switch" onClick={handleClick}>
+    <div className="switch">
       {openBarrages ? (
-        <BsToggleOn className="switch-icon" />
+        <BsToggleOn className="switch-icon" onClick={handleClick} />
       ) : (
-        <BsToggleOff className="switch-icon" />
+        <BsToggleOff className="switch-icon" onClick={handleClick} />
       )}
     </div>
   );

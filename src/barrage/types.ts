@@ -1,7 +1,6 @@
 import { ColorSetting } from "./enums";
 
 export interface IBarrage {
-  dateTime: number;
   content: string;
   fontSize: number;
   color: string;
