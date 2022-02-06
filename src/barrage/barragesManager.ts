@@ -3,9 +3,6 @@
 import { Barrage } from "./barrage";
 import { ChannelPositions } from "./channelPositions";
 import {
-  DEFAULE_COLOR_SETTING,
-  BLACK_COLOR_SETTING,
-  WHITE_COLOR_SETTING,
   BARRAGE_HEIGHT,
   CHANNEL_SIZE,
   DEFAULT_SPEED,
@@ -13,6 +10,7 @@ import {
   BARRAGE_PADDING,
   FONT_FAMILY,
 } from "./constants";
+import { ColorSetting, PositionSetting } from "./enums";
 import { IBarrage, ISettings } from "./types";
 
 export class BarragesManager {
@@ -23,7 +21,7 @@ export class BarragesManager {
   isPaused: boolean;
   speed: number;
   opacity: number;
-  color: string;
+  colorSetting: ColorSetting;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
 
@@ -46,7 +44,8 @@ export class BarragesManager {
     // 进行选项设置
     this.speed = settings?.speed || DEFAULT_SPEED;
     this.opacity = settings?.opacity || DEFAULT_OPACITY;
-    this.color = settings?.colorSetting || DEFAULE_COLOR_SETTING;
+    this.colorSetting =
+      settings?.colorSetting || ColorSetting.DEFAULE_COLOR_SETTING;
 
     // 初始化数据
     this.initBarrage(data, channelPositions.positions);
@@ -125,9 +124,9 @@ export class BarragesManager {
           this.context.font =
             channel[i].fontSize + "px/" + BARRAGE_HEIGHT + "px " + FONT_FAMILY;
 
-          if (this.color === WHITE_COLOR_SETTING) {
+          if (this.colorSetting === ColorSetting.WHITE_COLOR_SETTING) {
             this.context.fillStyle = "#ffffff";
-          } else if (this.color === BLACK_COLOR_SETTING) {
+          } else if (this.colorSetting === ColorSetting.BLACK_COLOR_SETTING) {
             this.context.fillStyle = "#000000";
           } else {
             this.context.fillStyle = channel[i].color;
@@ -214,6 +213,26 @@ export class BarragesManager {
     if (!this.isPaused) {
       requestAnimationFrame(this.render.bind(this));
     }
+  }
+
+  // 设置位置
+  setPosition(type: PositionSetting) {
+    this.channelPositions.setChannel(type);
+  }
+
+  // 设置透明度
+  setOpacity(opacity: number) {
+    this.opacity = opacity;
+  }
+
+  // 设置弹幕速度
+  setSpeed(speed: number) {
+    this.speed = speed;
+  }
+
+  // 设置颜色配置
+  setColorSetting(colorSetting: ColorSetting) {
+    this.colorSetting = colorSetting;
   }
 
   // 判断弹幕状态

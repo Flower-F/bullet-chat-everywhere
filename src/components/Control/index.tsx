@@ -8,19 +8,25 @@ import "./style.scss";
 import url from "../../../url.config";
 import { BarragesManager } from "../../barrage/barragesManager";
 import { ChannelPositions } from "../../barrage/channelPositions";
-import { WHOLE_POSITION } from "../../barrage/constants";
 import Restart from "../Restart";
+import { PositionSetting } from "../../barrage/enums";
 
 const Control = () => {
   const [barragesManager, setBarragesManager] = useState<BarragesManager>(
-    new BarragesManager([], new ChannelPositions(WHOLE_POSITION))
+    new BarragesManager(
+      [],
+      new ChannelPositions(PositionSetting.WHOLE_POSITION)
+    )
   );
 
   useEffect(() => {
     fetch(url + "/barrages").then((res) => {
       res.json().then((data) => {
         setBarragesManager(
-          new BarragesManager(data.list, new ChannelPositions(WHOLE_POSITION))
+          new BarragesManager(
+            data.list,
+            new ChannelPositions(PositionSetting.WHOLE_POSITION)
+          )
         );
       });
     });

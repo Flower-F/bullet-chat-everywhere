@@ -1,3 +1,5 @@
+import { ColorSetting } from "./enums";
+
 export interface IBarrage {
   dateTime: number;
   content: string;
@@ -8,5 +10,5 @@ export interface IBarrage {
 export interface ISettings {
   speed: number;
   opacity: number;
-  colorSetting: string;
+  colorSetting: ColorSetting;
 }
