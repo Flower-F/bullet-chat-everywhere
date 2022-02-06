@@ -70,7 +70,11 @@ const Control = () => {
             />
           </li>
           <li className="menu-item">
-            <Setting openState={openState} setOpenState={setOpenState} />
+            <Setting
+              openState={openState}
+              setOpenState={setOpenState}
+              barragesManager={barragesManager}
+            />
           </li>
           <li className="menu-item">
             <Question />

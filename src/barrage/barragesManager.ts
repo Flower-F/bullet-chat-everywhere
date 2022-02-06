@@ -14,16 +14,16 @@ import { ColorSetting, PositionSetting } from "./enums";
 import { IBarrage, ISettings } from "./types";
 
 export class BarragesManager {
-  channels: Barrage[][];
-  waitQueue: Barrage[];
-  data: IBarrage[];
-  channelPositions: ChannelPositions;
-  isPaused: boolean;
-  speed: number;
-  opacity: number;
-  colorSetting: ColorSetting;
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
+  private channels: Barrage[][];
+  private waitQueue: Barrage[];
+  private data: IBarrage[];
+  private channelPositions: ChannelPositions;
+  private isPaused: boolean;
+  private speed: number;
+  private opacity: number;
+  private colorSetting: ColorSetting;
+  private canvas: HTMLCanvasElement;
+  private context: CanvasRenderingContext2D;
 
   constructor(
     data: IBarrage[],
@@ -62,7 +62,7 @@ export class BarragesManager {
     this.canvas.style.opacity = this.opacity.toString();
   }
 
-  initBarrage(data: IBarrage[], positions: number[]) {
+  private initBarrage(data: IBarrage[], positions: number[]) {
     if (data.length === 0) {
       return;
     }
@@ -91,7 +91,7 @@ export class BarragesManager {
   }
 
   // 将数据包装成弹幕对象
-  getBarrage(obj: IBarrage, channel = 1) {
+  private getBarrage(obj: IBarrage, channel = 1) {
     const { content, fontSize, color } = obj;
     const barrage = new Barrage(content, fontSize, color, channel);
     // 初始化宽高
@@ -100,7 +100,7 @@ export class BarragesManager {
   }
 
   // 每次要进行的渲染操作
-  renderPerTime() {
+  private renderPerTime() {
     this.channels.forEach((channel, index) => {
       // 当通道为空时，直接塞入弹幕
       if (
@@ -158,23 +158,23 @@ export class BarragesManager {
   }
 
   // 清除画布
-  clearCanvas() {
+  private clearCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   // 播放弹幕
-  play() {
+  private play() {
     this.isPaused = false;
     this.render();
   }
 
   // 暂停弹幕
-  pause() {
+  private pause() {
     this.isPaused = true;
   }
 
   // 重播弹幕
-  replay() {
+  public replay() {
     // 清空画布
     this.clearCanvas();
     // 重新初始化弹幕数据
@@ -182,20 +182,20 @@ export class BarragesManager {
   }
 
   // 添加弹幕
-  add(obj: IBarrage) {
+  public add(obj: IBarrage) {
     this.data.push(obj);
     const barrage = this.getBarrage(obj);
     this.waitQueue.push(barrage);
   }
 
   // 开启弹幕
-  open() {
+  public open() {
     this.play();
   }
 
   // 关闭弹幕
   // 这个函数需要异步执行，否则无法清除
-  close(delay: number) {
+  public close(delay: number) {
     this.pause();
     let bulletChatTimer = null;
     bulletChatTimer && clearTimeout(bulletChatTimer);
@@ -205,7 +205,7 @@ export class BarragesManager {
   }
 
   // 渲染函数，这是一个递归函数，需要绑定 this
-  render() {
+  private render() {
     // 先清空画布
     this.clearCanvas();
     // 执行弹幕的渲染
@@ -217,28 +217,28 @@ export class BarragesManager {
   }
 
   // 设置位置
-  setPosition(type: PositionSetting) {
+  public setPosition(type: PositionSetting) {
     this.channelPositions.setChannel(type);
   }
 
   // 设置透明度
-  setOpacity(opacity: number) {
+  public setOpacity(opacity: number) {
     this.opacity = opacity;
     this.canvas.style.opacity = opacity.toString();
   }
 
   // 设置弹幕速度
-  setSpeed(speed: number) {
+  public setSpeed(speed: number) {
     this.speed = speed;
   }
 
   // 设置颜色配置
-  setColorSetting(colorSetting: ColorSetting) {
+  public setColorSetting(colorSetting: ColorSetting) {
     this.colorSetting = colorSetting;
   }
 
   // 判断弹幕状态
-  isRunning() {
+  public isRunning() {
     return this.isPaused === false;
   }
 }

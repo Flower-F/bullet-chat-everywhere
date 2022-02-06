@@ -3,17 +3,16 @@
 import { BARRAGE_HEIGHT, MARGIN_FROM_WINDOW } from "./constants";
 
 export class Barrage {
-  content: string;
-  fontSize: number;
-  isInitedWH: boolean;
-  color: string;
-  outOfWindow: boolean;
-  channel: number;
-  delayTime: number;
-  width: number;
-  isInitedXY: boolean;
-  x: number;
-  y: number;
+  public channel: number;
+  public outOfWindow: boolean;
+  public fontSize: number;
+  public color: string;
+  public content: string;
+  public isInitedWH: boolean;
+  public width: number;
+  public isInitedXY: boolean;
+  public x: number;
+  public y: number;
 
   constructor(
     content: string,
@@ -28,14 +27,13 @@ export class Barrage {
     this.isInitedXY = false; // 是否初始化了坐标
     this.outOfWindow = false; // 判断是否离开了窗口
     this.channel = channel; // 通道
-    this.delayTime = 0; // 延迟时间
     this.width = 0; // 宽度
     this.x = 0; // x 坐标
     this.y = 0; // y 坐标
   }
 
   // 初始化宽高
-  initWH() {
+  public initWH() {
     // 检测是否初始化
     if (this.isInitedWH) {
       return;

@@ -3,14 +3,14 @@
 import { PositionSetting } from "./enums";
 
 export class ChannelPositions {
-  positions: number[];
+  public positions: number[];
 
   constructor(type: PositionSetting) {
     this.positions = [];
     this.setChannel(type);
   }
 
-  setChannel(type: PositionSetting) {
+  public setChannel(type: PositionSetting) {
     switch (type) {
       case PositionSetting.TOP_POSITON:
         this.positions = [0, 1];

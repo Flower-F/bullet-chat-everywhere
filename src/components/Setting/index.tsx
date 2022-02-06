@@ -1,11 +1,13 @@
 import React from "react";
 import { IoSettingsOutline } from "react-icons/io5";
+import { BarragesManager } from "../../barrage/barragesManager";
 import { OpenState } from "../enums";
 import "./style.scss";
 
 interface ISetting {
   openState: OpenState;
   setOpenState: (state: OpenState) => void;
+  barragesManager: BarragesManager;
 }
 
 const Setting: React.FC<ISetting> = ({ setOpenState, openState }) => {
@@ -20,7 +22,7 @@ const Setting: React.FC<ISetting> = ({ setOpenState, openState }) => {
   return (
     <div className="setting">
       {openState === OpenState.OPEN_SETTING ? (
-        <div className="setting-board">setting-board</div>
+        <div className="setting-board"></div>
       ) : null}
       <IoSettingsOutline className="setting-icon" onClick={handleClick} />
     </div>
