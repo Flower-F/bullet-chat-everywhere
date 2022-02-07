@@ -55,7 +55,7 @@ const Font: React.FC<IFont> = ({
     }
 
     // 校验颜色是否合法
-    const reg = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    const reg = /^#([A-Fa-f0-9]{6})$/;
     if (reg.test(color)) {
       setColor(color);
     } else {

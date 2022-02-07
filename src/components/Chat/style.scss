@@ -18,9 +18,9 @@
   .chat-board {
     position: absolute;
     bottom: 50px;
-    left: -44px;
+    left: -36px;
     text-align: right;
-    padding: 5px 15px;
+    padding: 10px 15px;
     border: 2px solid black;
     background-color: #4d4d4d;
     cursor: default;
@@ -29,6 +29,7 @@
 
     .close-board {
       font-size: 20px;
+      margin-bottom: 2px;
       &:hover {
         cursor: pointer;
         transform: scale(1.1);
@@ -53,7 +54,7 @@
       }
     }
     .send-message {
-      margin-top: 2px;
+      margin-top: 5px;
       border: 2px solid #999;
       padding: 2px 5px;
       border-radius: 4px;

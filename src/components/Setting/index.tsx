@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, MouseEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BarragesManager } from "../../barrage/barragesManager";
 import { ColorSetting, PositionSetting } from "../../barrage/enums";
@@ -79,7 +79,9 @@ const Setting: React.FC<ISetting> = ({
   };
 
   const [opacity, setOpacity] = useState(barragesManager.getOpacity() * 100);
-  const [fixButton, setFixButton] = useState(false);
+  const [fixButton, setFixButton] = useState<boolean>(
+    localStorage.getItem("__bullet_chat_everywhere_fix__") === "true"
+  );
 
   return (
     <div className="setting">

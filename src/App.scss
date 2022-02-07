@@ -1,4 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 #bullet-chat-everywhere {
+  * {
+    box-sizing: border-box;
+  }
+
   .control {
     position: fixed;
     font-size: 14px;
