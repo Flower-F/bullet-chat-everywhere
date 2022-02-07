@@ -1,12 +1,15 @@
 // 控制弹幕出现的位置
 
+import { CHANNEL_SIZE } from "./constants";
 import { PositionSetting } from "./enums";
 
 export class ChannelPositions {
   public positions: number[];
+  public occupied: boolean[];
 
   constructor(type: PositionSetting) {
     this.positions = [];
+    this.occupied = new Array(CHANNEL_SIZE).fill(false);
     this.setChannel(type);
   }
 

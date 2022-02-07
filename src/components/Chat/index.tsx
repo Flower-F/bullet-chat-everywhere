@@ -23,6 +23,8 @@ const Chat: React.FC<IChat> = ({
 }) => {
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 禁用按钮
+    setBannedButton(true);
 
     const barrage = {
       content,
@@ -41,6 +43,8 @@ const Chat: React.FC<IChat> = ({
           barragesManager.add(barrage);
           // 输入框置空
           setContent("");
+          // 恢复按钮可用
+          setBannedButton(false);
         } else {
           console.log("Error: ", data.msg);
         }
@@ -69,6 +73,7 @@ const Chat: React.FC<IChat> = ({
 
   // 文本内容
   const [content, setContent] = useState("");
+  const [bannedButton, setBannedButton] = useState(false);
 
   return (
     <div className="chat">
@@ -83,7 +88,11 @@ const Chat: React.FC<IChat> = ({
             onChange={handleChange}
             value={content}
           />
-          <button type="submit" className="send-message">
+          <button
+            type="submit"
+            className="send-message"
+            disabled={bannedButton}
+          >
             发送
           </button>
         </form>

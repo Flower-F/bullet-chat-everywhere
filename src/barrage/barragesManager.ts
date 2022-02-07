@@ -48,7 +48,7 @@ export class BarragesManager {
       settings?.colorSetting || ColorSetting.DEFAULE_COLOR_SETTING;
 
     // 初始化数据
-    this.initBarrage(data, channelPositions.positions);
+    this.initBarrage(data);
 
     // 设置画布
     this.canvas = document.querySelector(
@@ -62,16 +62,21 @@ export class BarragesManager {
     this.canvas.style.opacity = this.opacity.toString();
   }
 
-  private initBarrage(data: IBarrage[], positions: number[]) {
+  private initBarrage(data: IBarrage[]) {
     if (data.length === 0) {
       return;
     }
     // 初始化数据，每个通道先插入一条弹幕
     // 2,3,4,5,6 [1,2]
     // 分配成 [2] [3]
-    for (let i = 0; i < positions.length && i < data.length; i++) {
+
+    for (
+      let i = 0;
+      i < this.channelPositions.positions.length && i < data.length;
+      i++
+    ) {
       // 查找当前插入的通道
-      const channel = positions[i];
+      const channel = this.channelPositions.positions[i];
       // 获取弹幕
       const barrage = this.getBarrage(data[i], channel);
 
@@ -79,11 +84,13 @@ export class BarragesManager {
       this.channels[channel].splice(0, this.channels[channel].length);
       // 插入弹幕
       this.channels[channel].push(barrage);
+      // 修改通道占用情况
+      this.channelPositions.occupied[i] = true;
     }
 
     // 等待队列清空，用于后续重播
     this.waitQueue.splice(0, this.waitQueue.length);
-    for (let i = positions.length; i < data.length; i++) {
+    for (let i = this.channelPositions.positions.length; i < data.length; i++) {
       const barrage = this.getBarrage(data[i]);
       // 弹幕插入等待队列
       this.waitQueue.push(barrage);
@@ -104,7 +111,8 @@ export class BarragesManager {
     this.channels.forEach((channel, index) => {
       // 当通道为空时，直接塞入弹幕
       if (
-        channel.length === 0 &&
+        (channel.length === 0 ||
+          this.channelPositions.occupied[index] === false) &&
         this.channelPositions.positions.includes(index) &&
         this.waitQueue.length
       ) {
@@ -115,6 +123,9 @@ export class BarragesManager {
       } else {
         for (let i = 0; i < channel.length; i++) {
           if (channel[i].outOfWindow) {
+            if (i === channel.length - 1) {
+              this.channelPositions.occupied[index] = false;
+            }
             continue;
           }
           // 初始化弹幕数据
@@ -134,12 +145,15 @@ export class BarragesManager {
           }
           this.context.fillText(channel[i].content, channel[i].x, channel[i].y);
 
+          // 修改通道占用情况
+          this.channelPositions.occupied[index] = true;
+
           // 判断是否需要将等待队列的内容塞入通道
           if (
             i === channel.length - 1 &&
             this.waitQueue.length &&
             window.innerWidth - this.waitQueue[0].width >=
-              channel[i].x + BARRAGE_PADDING
+              channel[i].x + BARRAGE_PADDING + channel[i].width
           ) {
             const shiftBarrage = this.waitQueue.shift() as Barrage;
             shiftBarrage.channel = index;
@@ -178,7 +192,7 @@ export class BarragesManager {
     // 清空画布
     this.clearCanvas();
     // 重新初始化弹幕数据
-    this.initBarrage(this.data, this.channelPositions.positions);
+    this.initBarrage(this.data);
   }
 
   // 添加弹幕

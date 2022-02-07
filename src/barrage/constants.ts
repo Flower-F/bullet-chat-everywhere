@@ -10,4 +10,4 @@ export const MARGIN_FROM_WINDOW = 60; // 第一排弹幕距离窗口顶部的距
 export const DEFAULT_SPEED = 2; // 默认速度
 export const CHANNEL_SIZE = 8; // 通道数
 export const DEFAULT_OPACITY = 0.8; // 默认的透明度
-export const BARRAGE_PADDING = 80; // 弹幕间距
+export const BARRAGE_PADDING = 60; // 弹幕间距
