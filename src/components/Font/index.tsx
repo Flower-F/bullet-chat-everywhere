@@ -47,6 +47,7 @@ const Font: React.FC<IFont> = ({
     const color = e.target.value;
     if (color.length < 1) {
       setInputColor("#");
+      setColor("#000000");
     } else if (color.length > 6) {
       setInputColor(e.target.value.substring(0, 7));
     } else {
@@ -55,8 +56,14 @@ const Font: React.FC<IFont> = ({
 
     // 校验颜色是否合法
     const reg = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-    if (!reg.test(color)) {
-      setColor("#000000");
+    if (reg.test(color)) {
+      setColor(color);
+    } else {
+      if (e.target.value.length >= 6) {
+        setColor(e.target.value.substring(0, 7));
+      } else {
+        setColor("#000000");
+      }
     }
   };
 

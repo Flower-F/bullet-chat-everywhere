@@ -14,4 +14,33 @@
       cursor: pointer;
     }
   }
+
+  .setting-board {
+    .set-positions {
+      .position-radio {
+        input[type="radio"] {
+        }
+      }
+    }
+    .set-opacity {
+      input[type="range"] {
+      }
+    }
+    .set-speed {
+      .speed-selections {
+        .speed-radio {
+          input[type="radio"] {
+          }
+        }
+      }
+    }
+    .set-color {
+      .color-radio {
+      }
+    }
+    .fix-button {
+      input[type="radio"] {
+      }
+    }
+  }
 }
