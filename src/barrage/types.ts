@@ -1,4 +1,4 @@
-import { ColorSetting } from "./enums";
+import { ColorSetting, Speed } from "./enums";
 
 export interface IBarrage {
   content: string;
@@ -7,7 +7,7 @@ export interface IBarrage {
 }
 
 export interface ISettings {
-  speed: number;
+  speed: Speed;
   opacity: number;
   colorSetting: ColorSetting;
 }

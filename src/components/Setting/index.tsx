@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BarragesManager } from "../../barrage/barragesManager";
-import { ColorSetting, PositionSetting } from "../../barrage/enums";
-import { OpenState, Speed } from "../enums";
+import { ColorSetting, PositionSetting, Speed } from "../../barrage/enums";
+import { OpenState } from "../enums";
 import "./style.scss";
 
 interface ISetting {
@@ -51,6 +51,7 @@ const Setting: React.FC<ISetting> = ({
       position === PositionSetting.MIDDLE_POSITION
     ) {
       barragesManager.setPosition(position);
+      setPosition(position);
     } else {
       console.log("类型不符");
     }
@@ -63,8 +64,10 @@ const Setting: React.FC<ISetting> = ({
       speed === Speed.QUICK_SPEED ||
       speed === Speed.SLOW_SPEED ||
       speed === Speed.VERY_QUICK_SPEED
-    )
+    ) {
       barragesManager.setSpeed(speed);
+      setSpeed(speed);
+    }
   };
 
   const handleColorSetting = (e: ChangeEvent<HTMLInputElement>) => {
@@ -75,12 +78,18 @@ const Setting: React.FC<ISetting> = ({
       colorSetting === ColorSetting.DEFAULT_COLOR_SETTING
     ) {
       barragesManager.setColorSetting(colorSetting);
+      setColorSetting(colorSetting);
     }
   };
 
   const [opacity, setOpacity] = useState(barragesManager.getOpacity() * 100);
   const [fixButton, setFixButton] = useState<boolean>(
     localStorage.getItem("__bullet_chat_everywhere_fix__") === "true"
+  );
+  const [position, setPosition] = useState(barragesManager.getPosition());
+  const [speed, setSpeed] = useState(barragesManager.getSpeed());
+  const [colorSetting, setColorSetting] = useState(
+    barragesManager.getColorSetting()
   );
 
   return (
@@ -97,6 +106,7 @@ const Setting: React.FC<ISetting> = ({
                 name="position"
                 value={PositionSetting.TOP_POSITON}
                 onChange={handlePosition}
+                checked={position === PositionSetting.TOP_POSITON}
               />
             </div>
             <div className="position-radio">
@@ -105,6 +115,7 @@ const Setting: React.FC<ISetting> = ({
                 type="radio"
                 name="position"
                 value={PositionSetting.MIDDLE_POSITION}
+                checked={position === PositionSetting.MIDDLE_POSITION}
                 onChange={handlePosition}
               />
             </div>
@@ -114,6 +125,7 @@ const Setting: React.FC<ISetting> = ({
                 type="radio"
                 name="position"
                 value={PositionSetting.BOTTOM_POSITION}
+                checked={position === PositionSetting.BOTTOM_POSITION}
                 onChange={handlePosition}
               />
             </div>
@@ -122,7 +134,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="position"
-                defaultChecked
+                checked={position === PositionSetting.WHOLE_POSITION}
                 value={PositionSetting.WHOLE_POSITION}
                 onChange={handlePosition}
               />
@@ -135,6 +147,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="speed"
+                checked={speed === Speed.VERY_QUICK_SPEED}
                 value={Speed.VERY_QUICK_SPEED}
                 onChange={handleSpeed}
               />
@@ -144,6 +157,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="speed"
+                checked={speed === Speed.QUICK_SPEED}
                 value={Speed.QUICK_SPEED}
                 onChange={handleSpeed}
               />
@@ -154,7 +168,7 @@ const Setting: React.FC<ISetting> = ({
                 type="radio"
                 name="speed"
                 value={Speed.NORMAL_SPEED}
-                defaultChecked
+                checked={speed === Speed.NORMAL_SPEED}
                 onChange={handleSpeed}
               />
             </div>
@@ -164,6 +178,7 @@ const Setting: React.FC<ISetting> = ({
                 type="radio"
                 name="speed"
                 value={Speed.SLOW_SPEED}
+                checked={speed === Speed.SLOW_SPEED}
                 onChange={handleSpeed}
               />
             </div>
@@ -175,7 +190,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="color"
-                defaultChecked
+                checked={colorSetting === ColorSetting.DEFAULT_COLOR_SETTING}
                 value={ColorSetting.DEFAULT_COLOR_SETTING}
                 onChange={handleColorSetting}
               />
@@ -185,6 +200,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="color"
+                checked={colorSetting === ColorSetting.BLACK_COLOR_SETTING}
                 value={ColorSetting.BLACK_COLOR_SETTING}
                 onChange={handleColorSetting}
               />
@@ -194,6 +210,7 @@ const Setting: React.FC<ISetting> = ({
               <input
                 type="radio"
                 name="color"
+                checked={colorSetting === ColorSetting.WHITE_COLOR_SETTING}
                 value={ColorSetting.WHITE_COLOR_SETTING}
                 onChange={handleColorSetting}
               />

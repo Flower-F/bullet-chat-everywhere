@@ -23,7 +23,7 @@ const Control = () => {
   useEffect(() => {
     axiosInstance
       .post("/getBarrages", {
-        website: window.location.href.split("?")[0],
+        website: document.location.origin,
       })
       .then(({ data }) => {
         if (data.status === 200) {
@@ -31,14 +31,15 @@ const Control = () => {
           setBarragesManager(
             new BarragesManager(
               data.list,
-              new ChannelPositions(PositionSetting.WHOLE_POSITION)
+              new ChannelPositions(barragesManager.getPosition()),
+              barragesManager.getSetting()
             )
           );
         } else {
           console.log("Error: ", data.msg);
         }
       });
-  }, []);
+  }, [document.location.origin]);
 
   // 字体配置
   const [fontSize, setFontSize] = useState(30);

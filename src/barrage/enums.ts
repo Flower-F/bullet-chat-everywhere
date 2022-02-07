@@ -12,3 +12,11 @@ export enum PositionSetting {
   BOTTOM_POSITION = "BOTTOM_POSITION", // 底部弹幕
   WHOLE_POSITION = "WHOLE_POSITION", // 全屏弹幕
 }
+
+// 速度种类
+export enum Speed {
+  SLOW_SPEED = 1,
+  NORMAL_SPEED = 2,
+  QUICK_SPEED = 4,
+  VERY_QUICK_SPEED = 6,
+}

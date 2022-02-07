@@ -16,6 +16,7 @@ export class ChannelPositions {
   }
 
   public setChannel(type: PositionSetting) {
+    this.type = type;
     switch (type) {
       case PositionSetting.TOP_POSITON:
         this.positions = [0, 1];

@@ -5,12 +5,11 @@ import { ChannelPositions } from "./channelPositions";
 import {
   BARRAGE_HEIGHT,
   CHANNEL_SIZE,
-  DEFAULT_SPEED,
   DEFAULT_OPACITY,
   BARRAGE_PADDING,
   FONT_FAMILY,
 } from "./constants";
-import { ColorSetting, PositionSetting } from "./enums";
+import { ColorSetting, PositionSetting, Speed } from "./enums";
 import { IBarrage, ISettings } from "./types";
 
 export class BarragesManager {
@@ -19,7 +18,7 @@ export class BarragesManager {
   private data: IBarrage[];
   private channelPositions: ChannelPositions;
   private isPaused: boolean;
-  private speed: number;
+  private speed: Speed;
   private opacity: number;
   private colorSetting: ColorSetting;
   private canvas: HTMLCanvasElement;
@@ -42,7 +41,7 @@ export class BarragesManager {
     this.isPaused = true;
 
     // 进行选项设置
-    this.speed = settings?.speed || DEFAULT_SPEED;
+    this.speed = settings?.speed || Speed.NORMAL_SPEED;
     this.opacity = settings?.opacity || DEFAULT_OPACITY;
     this.colorSetting =
       settings?.colorSetting || ColorSetting.DEFAULT_COLOR_SETTING;
@@ -118,17 +117,8 @@ export class BarragesManager {
         this.channelPositions.positions.includes(index) &&
         this.waitQueue.length
       ) {
-        console.log(channel);
-        // console.log("debug");
-        // console.log(
-        //   "this.channelPositions.occupied[index]",
-        //   this.channelPositions.occupied[index]
-        // );
-        // console.log("channel.length", channel.length);
-
         this.channelPositions.occupied[index] = true;
         const shiftBarrage = this.waitQueue.shift() as Barrage;
-        console.log(shiftBarrage);
         shiftBarrage.channel = index;
         shiftBarrage.initXY();
         channel.push(shiftBarrage);
@@ -192,6 +182,18 @@ export class BarragesManager {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  // 渲染函数，这是一个递归函数，需要绑定 this
+  private render() {
+    // 先清空画布
+    this.clearCanvas();
+    // 执行弹幕的渲染
+    this.renderPerTime();
+    // 判断是否暂停
+    if (!this.isPaused) {
+      requestAnimationFrame(this.render.bind(this));
+    }
+  }
+
   // 播放弹幕
   private play() {
     this.isPaused = false;
@@ -234,22 +236,14 @@ export class BarragesManager {
     }, delay);
   }
 
-  // 渲染函数，这是一个递归函数，需要绑定 this
-  private render() {
-    // 先清空画布
-    this.clearCanvas();
-    // 执行弹幕的渲染
-    this.renderPerTime();
-    // 判断是否暂停
-    if (!this.isPaused) {
-      requestAnimationFrame(this.render.bind(this));
-    }
-  }
-
   // 设置与获取位置
   public setPosition(type: PositionSetting) {
     this.channelPositions.setChannel(type);
     this.replay();
+  }
+
+  public getPosition() {
+    return this.channelPositions.type;
   }
 
   // 设置与获取弹幕透明度
@@ -262,14 +256,31 @@ export class BarragesManager {
     return this.opacity;
   }
 
-  // 设置与弹幕速度
-  public setSpeed(speed: number) {
+  // 设置与获取弹幕速度
+  public setSpeed(speed: Speed) {
     this.speed = speed;
   }
 
-  // 设置颜色配置
+  public getSpeed() {
+    return this.speed;
+  }
+
+  // 设置与获取颜色配置
   public setColorSetting(colorSetting: ColorSetting) {
     this.colorSetting = colorSetting;
+  }
+
+  public getColorSetting() {
+    return this.colorSetting;
+  }
+
+  // 获取设置信息
+  public getSetting(): ISettings {
+    return {
+      speed: this.speed,
+      opacity: this.opacity,
+      colorSetting: this.colorSetting,
+    };
   }
 
   // 判断弹幕状态

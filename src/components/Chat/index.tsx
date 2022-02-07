@@ -34,7 +34,7 @@ const Chat: React.FC<IChat> = ({
 
     axiosInstance
       .post("/sendBarrages", {
-        website: window.location.href.split("?")[0],
+        website: document.location.origin,
         ...barrage,
       })
       .then(({ data }) => {
