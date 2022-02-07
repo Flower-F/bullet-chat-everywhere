@@ -1,7 +1,7 @@
 {
-  "name": "my first extension",
+  "name": "Bullet Chat Everywhere",
   "version": "1.0.0",
-  "description": "This is my first extension",
+  "description": "You can see barrages everywhere now",
   "manifest_version": 2,
   "content_scripts": [
     {
