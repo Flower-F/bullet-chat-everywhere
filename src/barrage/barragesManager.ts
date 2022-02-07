@@ -45,7 +45,7 @@ export class BarragesManager {
     this.speed = settings?.speed || DEFAULT_SPEED;
     this.opacity = settings?.opacity || DEFAULT_OPACITY;
     this.colorSetting =
-      settings?.colorSetting || ColorSetting.DEFAULE_COLOR_SETTING;
+      settings?.colorSetting || ColorSetting.DEFAULT_COLOR_SETTING;
 
     // 初始化数据
     this.initBarrage(data);
@@ -66,6 +66,11 @@ export class BarragesManager {
     if (data.length === 0) {
       return;
     }
+
+    for (let i = 0; i < CHANNEL_SIZE; i++) {
+      this.channelPositions.occupied[i] = false;
+    }
+
     // 初始化数据，每个通道先插入一条弹幕
     // 2,3,4,5,6 [1,2]
     // 分配成 [2] [3]
@@ -153,7 +158,8 @@ export class BarragesManager {
             i === channel.length - 1 &&
             this.waitQueue.length &&
             window.innerWidth - this.waitQueue[0].width >=
-              channel[i].x + BARRAGE_PADDING + channel[i].width
+              channel[i].x + BARRAGE_PADDING + channel[i].width &&
+            this.channelPositions.positions.includes(index)
           ) {
             const shiftBarrage = this.waitQueue.shift() as Barrage;
             shiftBarrage.channel = index;
@@ -230,18 +236,22 @@ export class BarragesManager {
     }
   }
 
-  // 设置位置
+  // 设置与获取位置
   public setPosition(type: PositionSetting) {
     this.channelPositions.setChannel(type);
   }
 
-  // 设置透明度
+  // 设置与获取弹幕透明度
   public setOpacity(opacity: number) {
     this.opacity = opacity;
     this.canvas.style.opacity = opacity.toString();
   }
 
-  // 设置弹幕速度
+  public getOpacity() {
+    return this.opacity;
+  }
+
+  // 设置与弹幕速度
   public setSpeed(speed: number) {
     this.speed = speed;
   }

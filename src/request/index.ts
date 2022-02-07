@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs";
-import url from "../../url.config";
+import url from "./url";
+
+// 配置 axios 拦截器，防止多次重复请求
 
 const axiosInstance = axios.create({
   baseURL: url,

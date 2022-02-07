@@ -30,6 +30,9 @@ export const setScope = () => {
       bottom = window.innerHeight - boundingBottom;
 
     document.onmousemove = (e) => {
+      if (localStorage.getItem("__bullet_chat_everywhere_fix__") === "true") {
+        return;
+      }
       scope.style.visibility = "visible";
       box.className = "control selected";
 

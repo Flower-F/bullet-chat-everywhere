@@ -6,8 +6,10 @@ import { PositionSetting } from "./enums";
 export class ChannelPositions {
   public positions: number[];
   public occupied: boolean[];
+  type: PositionSetting;
 
   constructor(type: PositionSetting) {
+    this.type = type;
     this.positions = [];
     this.occupied = new Array(CHANNEL_SIZE).fill(false);
     this.setChannel(type);

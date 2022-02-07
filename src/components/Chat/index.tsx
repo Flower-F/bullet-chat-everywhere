@@ -43,11 +43,11 @@ const Chat: React.FC<IChat> = ({
           barragesManager.add(barrage);
           // 输入框置空
           setContent("");
-          // 恢复按钮可用
-          setBannedButton(false);
         } else {
           console.log("Error: ", data.msg);
         }
+        // 恢复按钮可用
+        setBannedButton(false);
       })
       .catch(() => {
         console.log("已取消重复请求");

@@ -17,18 +17,18 @@
 
   .chat-board {
     position: absolute;
-    top: -210px;
-    left: -50px;
+    bottom: 50px;
+    left: -44px;
     text-align: right;
     padding: 5px 15px;
     border: 2px solid black;
     background-color: #4d4d4d;
     cursor: default;
     border-radius: 6px;
+    color: #f1f1f1;
 
     .close-board {
       font-size: 20px;
-      color: #fff;
       &:hover {
         cursor: pointer;
         transform: scale(1.1);
@@ -45,11 +45,11 @@
       border-radius: 6px;
       opacity: 0.8;
       background-color: #4d4d4d;
-      color: #fff;
+      color: #f1f1f1;
       outline: none;
 
       &::placeholder {
-        color: #fff;
+        color: #f1f1f1;
       }
     }
     .send-message {
@@ -58,7 +58,7 @@
       padding: 2px 5px;
       border-radius: 4px;
       background-color: #4d4d4d;
-      color: #fff;
+      color: #f1f1f1;
       &:hover {
         cursor: pointer;
         transform: scale(1.05);

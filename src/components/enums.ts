@@ -7,3 +7,10 @@ export enum OpenState {
   OPEN_FONT = "OPEN_FONT",
   CLOSE = "CLOSE",
 }
+
+export enum Speed {
+  SLOW_SPEED = 1,
+  NORMAL_SPEED = 2,
+  QUICK_SPEED = 4,
+  VERY_QUICK_SPEED = 6,
+}
