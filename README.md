@@ -3,4 +3,7 @@
 ## 技术栈
 
 前端：React Hooks + Typescript + Sass + Axios + Webpack
+
 后端：字节轻服务
+
+其它：Prettier + Eslint

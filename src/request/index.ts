@@ -3,45 +3,46 @@ import qs from "qs";
 import url from "./url";
 
 // 配置 axios 拦截器，防止多次重复请求
-
 const axiosInstance = axios.create({
   baseURL: url,
 });
 
-const pendingRequest = new Map();
+// 存储所有请求的 key
+const requestList = new Map();
 
 // 为每一个请求生成一个独立的 key
-function generateReqKey(config: AxiosRequestConfig) {
+function generateKey(config: AxiosRequestConfig) {
   const { method, url, params, data } = config;
-
   return [method, url, qs.stringify(params), qs.stringify(data)].join("&");
 }
 
-function addPendingRequest(config: AxiosRequestConfig) {
-  const requestKey = generateReqKey(config);
+// 添加请求
+function addRequest(config: AxiosRequestConfig) {
+  const requestKey = generateKey(config);
   // console.log(requestKey);
   config.cancelToken =
     config.cancelToken ||
     new axios.CancelToken((cancel) => {
-      if (!pendingRequest.has(requestKey)) {
-        pendingRequest.set(requestKey, cancel);
+      if (!requestList.has(requestKey)) {
+        requestList.set(requestKey, cancel);
       }
     });
 }
 
-function removePendingRequest(config: AxiosRequestConfig) {
-  const requestKey = generateReqKey(config);
-  if (pendingRequest.has(requestKey)) {
-    const cancel = pendingRequest.get(requestKey);
+// 删除请求
+function removeRequest(config: AxiosRequestConfig) {
+  const requestKey = generateKey(config);
+  if (requestList.has(requestKey)) {
+    const cancel = requestList.get(requestKey);
     cancel(requestKey);
-    pendingRequest.delete(requestKey);
+    requestList.delete(requestKey);
   }
 }
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    removePendingRequest(config); // 检查是否存在重复请求，若存在则取消已发的请求
-    addPendingRequest(config); // 把当前请求添加到pendingRequest对象中
+    removeRequest(config); // 检查是否存在重复请求，若存在则取消已发的请求
+    addRequest(config); // 把当前请求添加到请求列表中
     return config;
   },
   (error) => {
@@ -51,11 +52,11 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    removePendingRequest(response.config); // 从pendingRequest对象中移除请求
+    removeRequest(response.config); // 从请求列表中移除请求
     return response;
   },
   (error) => {
-    removePendingRequest(error.config || {}); // 从pendingRequest对象中移除请求
+    removeRequest(error.config || {}); // 从请求列表中移除请求
     if (axios.isCancel(error)) {
       // console.log("已取消的重复请求：" + error.message);
     }
