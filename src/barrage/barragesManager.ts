@@ -14,7 +14,7 @@ import { IBarrage, ISettings } from "./types";
 
 export class BarragesManager {
   private channels: Barrage[][];
-  private waitQueue: Barrage[];
+  private waitStack: Barrage[];
   private data: IBarrage[];
   private channelPositions: ChannelPositions;
   private isPaused: boolean;
@@ -34,8 +34,8 @@ export class BarragesManager {
     this.channels = new Array(CHANNEL_SIZE)
       .fill(1)
       .map(() => new Array<Barrage>());
-    // 等待队列
-    this.waitQueue = [];
+    // 等待栈
+    this.waitStack = [];
 
     // 是否暂停播放
     this.isPaused = true;
@@ -88,12 +88,12 @@ export class BarragesManager {
       this.channelPositions.occupied[i] = true;
     }
 
-    // 等待队列清空，用于后续重播
-    this.waitQueue.splice(0, this.waitQueue.length);
+    // 等待栈清空，用于后续重播
+    this.waitStack.splice(0, this.waitStack.length);
     for (let i = this.channelPositions.positions.length; i < data.length; i++) {
       const barrage = this.getBarrage(data[i]);
-      // 弹幕插入等待队列
-      this.waitQueue.push(barrage);
+      // 弹幕插入等待栈
+      this.waitStack.push(barrage);
     }
   }
 
@@ -115,10 +115,10 @@ export class BarragesManager {
         (channel.length === 0 ||
           this.channelPositions.occupied[index] === false) &&
         this.channelPositions.positions.includes(index) &&
-        this.waitQueue.length
+        this.waitStack.length
       ) {
         this.channelPositions.occupied[index] = true;
-        const shiftBarrage = this.waitQueue.shift() as Barrage;
+        const shiftBarrage = this.waitStack.pop() as Barrage;
         shiftBarrage.channel = index;
         shiftBarrage.initXY();
         channel.push(shiftBarrage);
@@ -150,18 +150,18 @@ export class BarragesManager {
           }
           this.context.fillText(channel[i].content, channel[i].x, channel[i].y);
 
-          // 判断是否需要将等待队列的内容塞入通道
+          // 判断是否需要将等待栈的内容塞入通道
           if (
             i === channel.length - 1 &&
-            this.waitQueue.length &&
+            this.waitStack.length &&
             window.innerWidth >=
               channel[i].x + channel[i].width + BARRAGE_PADDING &&
             this.channelPositions.positions.includes(index)
           ) {
             // 修改通道占用情况
             this.channelPositions.occupied[index] = true;
-            // 从等待队列中取出元素塞入通道中
-            const shiftBarrage = this.waitQueue.shift() as Barrage;
+            // 从等待栈中取出元素塞入通道中
+            const shiftBarrage = this.waitStack.pop() as Barrage;
             shiftBarrage.channel = index;
             shiftBarrage.initXY();
             channel.push(shiftBarrage);
@@ -217,7 +217,7 @@ export class BarragesManager {
   public add(obj: IBarrage) {
     this.data.push(obj);
     const barrage = this.getBarrage(obj);
-    this.waitQueue.push(barrage);
+    this.waitStack.push(barrage);
   }
 
   // 开启弹幕
