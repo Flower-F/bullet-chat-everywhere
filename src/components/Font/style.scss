@@ -27,6 +27,16 @@
     color: #f1f1f1;
 
     .color-selector {
+      .close-board {
+        position: absolute;
+        font-size: 20px;
+        right: 10px;
+        color: #f1f1f1;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.05);
+        }
+      }
       .color-text {
         margin-left: 10px;
         width: 80px;

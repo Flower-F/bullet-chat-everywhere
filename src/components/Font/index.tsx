@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import { AiOutlineFontSize } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineFontSize } from "react-icons/ai";
 import { OpenState } from "../enums";
 import { colors } from "./colors";
 import "./style.scss";
 
-interface IFont {
+interface IFontProps {
   openState: OpenState;
   setOpenState: (state: OpenState) => void;
   fontSize: number;
@@ -13,7 +13,7 @@ interface IFont {
   setColor: (color: string) => void;
 }
 
-const Font: React.FC<IFont> = ({
+const Font: React.FC<IFontProps> = ({
   openState,
   setOpenState,
   fontSize,
@@ -90,6 +90,7 @@ const Font: React.FC<IFont> = ({
               onChange={handleChangeColor}
               value={inputColor}
             />
+            <AiOutlineClose className="close-board" onClick={handleClick} />
             <div className="color-show">
               颜色演示
               <span

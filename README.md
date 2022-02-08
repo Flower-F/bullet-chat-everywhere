@@ -6,7 +6,7 @@
 
 后端：字节轻服务
 
-其它：Prettier + Eslint
+其它：Prettier + ESlint
 
 ## 运行方法
 

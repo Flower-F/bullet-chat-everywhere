@@ -3,11 +3,11 @@ import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 import { BarragesManager } from "../../barrage/barragesManager";
 import "./style.scss";
 
-interface ISwitcher {
+interface ISwitcherProps {
   barragesManager: BarragesManager;
 }
 
-const Switcher: React.FC<ISwitcher> = ({ barragesManager }) => {
+const Switcher: React.FC<ISwitcherProps> = ({ barragesManager }) => {
   const [openBarrages, setOpenBarrages] = useState(barragesManager.isRunning());
 
   const handleClick = () => {

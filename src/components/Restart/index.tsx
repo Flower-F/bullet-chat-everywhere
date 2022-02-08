@@ -3,11 +3,11 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { BarragesManager } from "../../barrage/barragesManager";
 import "./style.scss";
 
-interface IRestart {
+interface IRestartProps {
   barragesManager: BarragesManager;
 }
 
-const Restart: React.FC<IRestart> = ({ barragesManager }) => {
+const Restart: React.FC<IRestartProps> = ({ barragesManager }) => {
   const handleClick = () => {
     barragesManager.replay();
   };

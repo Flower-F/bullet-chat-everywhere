@@ -6,7 +6,7 @@ import { axiosInstance } from "../../request";
 import { OpenState } from "../enums";
 import "./style.scss";
 
-interface IChat {
+interface IChatProps {
   openState: OpenState;
   setOpenState: (state: OpenState) => void;
   barragesManager: BarragesManager;
@@ -14,7 +14,7 @@ interface IChat {
   color: string;
 }
 
-const Chat: React.FC<IChat> = ({
+const Chat: React.FC<IChatProps> = ({
   openState,
   setOpenState,
   fontSize,

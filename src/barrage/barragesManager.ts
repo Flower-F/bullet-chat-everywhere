@@ -239,7 +239,6 @@ export class BarragesManager {
   // 设置与获取位置
   public setPosition(type: PositionSetting) {
     this.channelPositions.setChannel(type);
-    this.replay();
   }
 
   public getPosition() {

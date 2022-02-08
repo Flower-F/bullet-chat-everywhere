@@ -1,17 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BarragesManager } from "../../barrage/barragesManager";
 import { ColorSetting, PositionSetting, Speed } from "../../barrage/enums";
 import { OpenState } from "../enums";
 import "./style.scss";
 
-interface ISetting {
+interface ISettingProps {
   openState: OpenState;
   setOpenState: (state: OpenState) => void;
   barragesManager: BarragesManager;
 }
 
-const Setting: React.FC<ISetting> = ({
+const Setting: React.FC<ISettingProps> = ({
   setOpenState,
   openState,
   barragesManager,
@@ -25,11 +26,16 @@ const Setting: React.FC<ISetting> = ({
   };
 
   const handleChangeOpacity = (e: ChangeEvent<HTMLInputElement>) => {
-    const opacity = parseInt(e.target.value);
-    if (opacity > 100 || opacity < 0) {
-      return;
+    let opacity = parseInt(e.target.value);
+    if (opacity >= 100) {
+      opacity = 100;
+    } else if (opacity < 0) {
+      opacity = 0;
     }
     setOpacity(opacity);
+    if (opacity === 100) {
+      opacity = 99;
+    }
     barragesManager.setOpacity(opacity / 100);
   };
 
@@ -98,6 +104,7 @@ const Setting: React.FC<ISetting> = ({
       {openState === OpenState.OPEN_SETTING ? (
         <div className="setting-board">
           弹幕位置
+          <AiOutlineClose className="close-board" onClick={handleClick} />
           <form className="set-positions">
             <div className="position-radio">
               顶部
@@ -230,7 +237,7 @@ const Setting: React.FC<ISetting> = ({
             </div>
           </form>
           <form className="fix-button">
-            固定按钮
+            移动按钮
             <input
               type="radio"
               checked={fixButton}
