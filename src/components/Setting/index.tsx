@@ -100,7 +100,11 @@ const Setting: React.FC<ISettingProps> = ({
 
   return (
     <div className="setting">
-      <IoSettingsOutline className="setting-icon" onClick={handleClick} />
+      <IoSettingsOutline
+        className="setting-icon"
+        onClick={handleClick}
+        title="弹幕设置"
+      />
       {openState === OpenState.OPEN_SETTING ? (
         <div className="setting-board">
           弹幕位置

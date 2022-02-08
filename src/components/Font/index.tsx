@@ -79,7 +79,11 @@ const Font: React.FC<IFontProps> = ({
 
   return (
     <div className="font">
-      <AiOutlineFontSize className="font-icon" onClick={handleClick} />
+      <AiOutlineFontSize
+        className="font-icon"
+        onClick={handleClick}
+        title="字体设置"
+      />
       {openState === OpenState.OPEN_FONT ? (
         <div className="font-board">
           <div className="color-selector">

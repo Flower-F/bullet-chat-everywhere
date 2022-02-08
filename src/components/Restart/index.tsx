@@ -14,7 +14,11 @@ const Restart: React.FC<IRestartProps> = ({ barragesManager }) => {
 
   return (
     <div className="restart">
-      <VscDebugRestart className="restart-icon" onClick={handleClick} />
+      <VscDebugRestart
+        className="restart-icon"
+        onClick={handleClick}
+        title="重播弹幕"
+      />
     </div>
   );
 };

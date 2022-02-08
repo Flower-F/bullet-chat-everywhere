@@ -22,9 +22,17 @@ const Switcher: React.FC<ISwitcherProps> = ({ barragesManager }) => {
   return (
     <div className="switch">
       {openBarrages ? (
-        <BsToggleOn className="switch-icon" onClick={handleClick} />
+        <BsToggleOn
+          className="switch-icon"
+          onClick={handleClick}
+          title="关闭弹幕"
+        />
       ) : (
-        <BsToggleOff className="switch-icon" onClick={handleClick} />
+        <BsToggleOff
+          className="switch-icon"
+          onClick={handleClick}
+          title="开启弹幕"
+        />
       )}
     </div>
   );

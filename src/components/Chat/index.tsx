@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState, KeyboardEvent } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsChatSquareDots } from "react-icons/bs";
 import { BarragesManager } from "../../barrage/barragesManager";
@@ -21,8 +21,11 @@ const Chat: React.FC<IChatProps> = ({
   color,
   barragesManager,
 }) => {
-  const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSumbit = () => {
+    if (content.length > 50) {
+      return;
+    }
+
     // 禁用按钮
     setBannedButton(true);
 
@@ -64,11 +67,19 @@ const Chat: React.FC<IChatProps> = ({
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const str = e.target.value || "";
-    if (str.length >= 100) {
-      console.log("输入内容过长");
+    if (str.length > 50) {
+      // console.log("输入内容过长");
       return;
     }
     setContent(str);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    // console.log(e.key);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSumbit();
+    }
   };
 
   // 文本内容
@@ -77,21 +88,27 @@ const Chat: React.FC<IChatProps> = ({
 
   return (
     <div className="chat">
-      <BsChatSquareDots className="chat-icon" onClick={handleClick} />
+      <BsChatSquareDots
+        className="chat-icon"
+        onClick={handleClick}
+        title="发送弹幕"
+      />
       {openState === OpenState.OPEN_CHAT ? (
-        <form className="chat-board" onSubmit={handleSumbit}>
+        <form className="chat-board">
           <AiOutlineClose className="close-board" onClick={handleClick} />
           <textarea
             className="chat-input"
             placeholder="发条弹幕吧..."
-            maxLength={100}
+            maxLength={50}
             onChange={handleChange}
             value={content}
+            onKeyDown={handleKeyDown}
           />
           <button
             type="submit"
             className="send-message"
             disabled={bannedButton}
+            onClick={handleSumbit}
           >
             发送
           </button>
