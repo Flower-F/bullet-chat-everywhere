@@ -27,7 +27,7 @@ const Control = () => {
       })
       .then(({ data }) => {
         if (data.status === 200) {
-          console.log("弹幕数据", data.list);
+          // console.log("弹幕数据", data.list);
           setBarragesManager(
             new BarragesManager(
               data.list,
@@ -39,7 +39,7 @@ const Control = () => {
           console.log("Error: ", data.msg);
         }
       });
-  }, [document.location.origin]);
+  }, []);
 
   // 字体配置
   const [fontSize, setFontSize] = useState(30);

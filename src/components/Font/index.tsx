@@ -110,7 +110,7 @@ const Font: React.FC<IFontProps> = ({
             </div>
           </div>
           <div className="font-family">
-            字体
+            字号
             <input
               className="font-input"
               type="number"
