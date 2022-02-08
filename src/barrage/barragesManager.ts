@@ -154,8 +154,8 @@ export class BarragesManager {
           if (
             i === channel.length - 1 &&
             this.waitQueue.length &&
-            window.innerWidth - this.waitQueue[0].width >=
-              channel[i].x + BARRAGE_PADDING + channel[i].width &&
+            window.innerWidth >=
+              channel[i].x + channel[i].width + BARRAGE_PADDING &&
             this.channelPositions.positions.includes(index)
           ) {
             // 修改通道占用情况
