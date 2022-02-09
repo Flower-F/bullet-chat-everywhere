@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState, KeyboardEvent } from "react";
+import React, { ChangeEvent, useState, KeyboardEvent } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsChatSquareDots } from "react-icons/bs";
 import { BarragesManager } from "../../barrage/barragesManager";
@@ -22,12 +22,14 @@ const Chat: React.FC<IChatProps> = ({
   barragesManager,
 }) => {
   const handleSumbit = () => {
-    if (content.length > 50) {
+    if (content.length > 50 || content.length === 0) {
       return;
     }
 
     // 禁用按钮
     setBannedButton(true);
+    // 输入框置空
+    setContent("");
 
     const barrage = {
       content,
@@ -44,16 +46,14 @@ const Chat: React.FC<IChatProps> = ({
         if (data.status === 200) {
           // 插入弹幕
           barragesManager.add(barrage);
-          // 输入框置空
-          setContent("");
         } else {
-          console.log("Error: ", data.msg);
+          // console.log("Error: ", data.msg);
         }
         // 恢复按钮可用
         setBannedButton(false);
       })
       .catch(() => {
-        console.log("已取消重复请求");
+        // console.log("已取消重复请求");
       });
   };
 

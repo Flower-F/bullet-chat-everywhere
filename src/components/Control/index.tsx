@@ -36,8 +36,11 @@ const Control = () => {
             )
           );
         } else {
-          console.log("Error: ", data.msg);
+          // console.log("Error: ", data.msg);
         }
+      })
+      .catch(() => {
+        // console.log("Network Error!");
       });
   }, []);
 

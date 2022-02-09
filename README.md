@@ -1,5 +1,7 @@
 # 一个 chrome 弹幕插件
 
+官方文档：[https://bullet-chat-everywhere-5e5799636-1305624698.tcloudbaseapp.com/](https://bullet-chat-everywhere-5e5799636-1305624698.tcloudbaseapp.com/)
+
 ## 技术栈
 
 前端：React Hooks + Typescript + Sass + Axios + Webpack

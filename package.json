@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "main": "index.tsx",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "typescript",
+    "sass",
+    "axios",
+    "barrage"
+  ],
+  "description": "一款便捷的网页弹幕插件",
   "devDependencies": {
     "@babel/core": "^7.16.12",
     "@babel/plugin-transform-runtime": "^7.16.10",

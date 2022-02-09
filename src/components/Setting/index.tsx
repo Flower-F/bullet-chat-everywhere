@@ -59,7 +59,7 @@ const Setting: React.FC<ISettingProps> = ({
       barragesManager.setPosition(position);
       setPosition(position);
     } else {
-      console.log("类型不符");
+      // console.log("类型不符");
     }
   };
 

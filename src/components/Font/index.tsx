@@ -32,11 +32,11 @@ const Font: React.FC<IFontProps> = ({
   const handleChangeFontSize = (e: ChangeEvent<HTMLInputElement>) => {
     const size = parseInt(e.target.value);
     if (size > 40) {
-      console.log("弹幕字号最大为 40");
+      // console.log("弹幕字号最大为 40");
       setFontSize(40);
       return;
     } else if (size < 20) {
-      console.log("弹幕字号最小为 20");
+      // console.log("弹幕字号最小为 20");
       setFontSize(20);
       return;
     }

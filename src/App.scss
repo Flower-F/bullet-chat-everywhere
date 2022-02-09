@@ -3,6 +3,11 @@
     box-sizing: border-box;
   }
 
+  svg {
+    width: auto;
+    height: auto;
+  }
+
   .control {
     position: fixed;
     font-size: 14px;

@@ -110,7 +110,6 @@ export class BarragesManager {
   private renderPerTime() {
     this.channels.forEach((channel, index) => {
       // 当通道为空时，直接塞入弹幕
-
       if (
         (channel.length === 0 ||
           this.channelPositions.occupied[index] === false) &&
