@@ -22,7 +22,11 @@ const Chat: React.FC<IChatProps> = ({
   barragesManager,
 }) => {
   const handleSumbit = () => {
-    if (content.length > 50 || content.length === 0) {
+    const realContent = content.trim();
+    if (realContent.length > 50 || realContent.length === 0) {
+      if (realContent.length === 0) {
+        setContent("");
+      }
       return;
     }
 
@@ -32,7 +36,7 @@ const Chat: React.FC<IChatProps> = ({
     setContent("");
 
     const barrage = {
-      content,
+      content: realContent,
       fontSize,
       color,
     };
@@ -94,7 +98,7 @@ const Chat: React.FC<IChatProps> = ({
         title="发送弹幕"
       />
       {openState === OpenState.OPEN_CHAT ? (
-        <form className="chat-board">
+        <div className="chat-board">
           <AiOutlineClose className="close-board" onClick={handleClick} />
           <textarea
             className="chat-input"
@@ -105,14 +109,13 @@ const Chat: React.FC<IChatProps> = ({
             onKeyDown={handleKeyDown}
           />
           <button
-            type="submit"
             className="send-message"
             disabled={bannedButton}
             onClick={handleSumbit}
           >
             发送
           </button>
-        </form>
+        </div>
       ) : null}
     </div>
   );
