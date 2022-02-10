@@ -67,30 +67,31 @@ export class BarragesManager {
     }
 
     // 初始化数据，每个通道先插入一条弹幕
-    // 2,3,4,5,6 [1,2]
-    // 分配成 [2] [3]
 
     for (
-      let i = 0;
-      i < this.channelPositions.positions.length && i < data.length;
-      i++
+      let i = data.length - 1, j = 0;
+      i >= 0 && j < this.channelPositions.positions.length;
+      i--, j++
     ) {
       // 查找当前插入的通道
-      const channel = this.channelPositions.positions[i];
+      const channel = this.channelPositions.positions[j];
       // 获取弹幕
       const barrage = this.getBarrage(data[i], channel);
-
       // 将原数组清空，用于后续重播
       this.channels[channel].splice(0, this.channels[channel].length);
       // 插入弹幕
       this.channels[channel].push(barrage);
       // 修改通道占用情况
-      this.channelPositions.occupied[i] = true;
+      this.channelPositions.occupied[channel] = true;
     }
 
     // 等待栈清空，用于后续重播
     this.waitStack.splice(0, this.waitStack.length);
-    for (let i = this.channelPositions.positions.length; i < data.length; i++) {
+    for (
+      let i = 0;
+      i < data.length - this.channelPositions.positions.length;
+      i++
+    ) {
       const barrage = this.getBarrage(data[i]);
       // 弹幕插入等待栈
       this.waitStack.push(barrage);
